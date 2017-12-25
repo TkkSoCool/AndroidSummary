@@ -21,7 +21,6 @@ import java.util.function.BinaryOperator;
  * Created  on 2017/11/30
  * @author 唐开阔
  * @describe 常用数据结构，链表，列队，栈，速度，树，图，哈希表
- *
  * 集合框架：
  * 一：Collection接口：包含了容器类的主要方法。
     直接子类
