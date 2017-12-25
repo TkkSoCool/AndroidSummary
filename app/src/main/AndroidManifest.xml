@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tkk.androidsummary">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <application
+        android:name=".LeakApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".knowledgepoint.ipc.AidlActivity" />
+        <activity
+            android:name=".knowledgepoint.fourcomponents.ActivityActivity"
+            android:taskAffinity=":aaa" />
+        <activity android:name=".knowledgepoint.fourcomponents.ServiceTestActivity" />
+
+        <service
+            android:name=".knowledgepoint.fourcomponents.MyTestService"
+            android:exported="true" />
+
+        <activity
+            android:name=".knowledgepoint.fourcomponents.BActivity"
+            android:launchMode="singleInstance"
+            android:taskAffinity=":aaa" />
+        <activity android:name=".knowledgepoint.fourcomponents.BroadcastActivity" />
+        <activity android:name=".knowledgepoint.view.ViewSavedStateActivity" />
+        <activity android:name=".knowledgepoint.thread.ThreadActivity" />
+        <activity android:name=".knowledgepoint.thread.HandlerActivity" />
+        <activity android:name=".knowledgepoint.fourcomponents.ContextActivity" />
+        <activity android:name=".knowledgepoint.algorithm.SortAndFindActivity" />
+        <activity android:name=".knowledgepoint.touch.TouchActivity" />
+        <activity android:name=".knowledgepoint.frame.Dagger2Activity" />
+        <activity android:name=".knowledgepoint.optimize.MemorLeakActivity" />
+        <activity android:name=".knowledgepoint.mvvm.Mvvm2Activity" />
+        <activity android:name=".knowledgepoint.algorithm.DataStructureActivity" />
+        <activity android:name=".knowledgepoint.javatype.JavaTypeActivity" />
+        <activity android:name=".knowledgepoint.kotlin.KotlinActivityActivity" />
+    </application>
+
+</manifest>
