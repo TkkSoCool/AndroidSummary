@@ -48,6 +48,9 @@
         <activity android:name=".knowledgepoint.algorithm.DataStructureActivity" />
         <activity android:name=".knowledgepoint.javatype.JavaTypeActivity" />
         <activity android:name=".knowledgepoint.kotlin.KotlinActivityActivity" />
+        <activity android:name=".knowledgepoint.frame.EventBus.EventBusActivity" />
+        <activity android:name=".knowledgepoint.frame.ApolloActivity" />
+        <activity android:name=".knowledgepoint.frame.CollapsingToolbarLayoutActivity"></activity>
     </application>
 
 </manifest>

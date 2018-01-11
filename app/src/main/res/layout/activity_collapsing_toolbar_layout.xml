@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        app:elevation="0dp"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            app:titleEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <TextView
+                android:textSize="30sp"
+                android:text="滚动部分"
+                android:gravity="center"
+                android:background="#ff00"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="top"
+                app:layout_collapseMode="pin"
+                >
+
+                <TextView
+                    android:layout_marginLeft="0dp"
+                    android:textSize="20sp"
+                    android:text="顶部部分"
+                    android:minHeight="50dp"
+                    android:gravity="center"
+                    android:background="#ff0088"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/toolbar_tab"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="#ffffff"
+            android:fillViewport="false"
+            app:tabIndicatorColor="#0835f8"
+            app:tabIndicatorHeight="2.0dp"
+            app:tabSelectedTextColor="#0835f8"
+            app:tabTextColor="#151515">
+
+            <!--指示器颜色-->
+            <!-- app:tabIndicatorColor="#0835f8"-->
+
+            <!--tab条目中字体颜色-->
+            <!--app:tabSelectedTextColor="#0835f8"-->
+
+
+            <!--布局选择器-->
+            <!--android:icon="@drawable/tab_selector"-->
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="头条" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="社交" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="直播" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="约吗" />
+
+
+        </android.support.design.widget.TabLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.design.widget.CoordinatorLayout>
+

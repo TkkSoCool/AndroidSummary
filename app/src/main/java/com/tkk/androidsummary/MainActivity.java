@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
                         Intent intent = new Intent();
                         intent.setComponent(item.getComponentName());
                         startActivity(intent);
+
                     }
                 });
             }

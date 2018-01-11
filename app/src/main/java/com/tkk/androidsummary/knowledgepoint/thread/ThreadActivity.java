@@ -49,6 +49,7 @@ import butterknife.OnClick;
  * b)同步非静态方法锁住的是当前对象实例
  * c)同步静态方法锁住的是类的class对象
  * 4)volatile关键字修饰变量，会保持变量的一致性
+
  * 线程池
  */
 @BindLayout(R.layout.activity_thread)
