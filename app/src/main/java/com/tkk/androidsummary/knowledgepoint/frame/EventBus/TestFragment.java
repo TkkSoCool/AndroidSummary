@@ -1,16 +1,13 @@
 package com.tkk.androidsummary.knowledgepoint.frame.EventBus;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.lsxiao.apollo.core.Apollo;
 import com.tkk.androidsummary.R;
+import com.tkk.androidsummary.knowledgepoint.view.lazyfragment.LazyFragment;
 
-import org.greenrobot.eventbus.EventBus;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created  on 2017/12/29
@@ -19,25 +16,24 @@ import org.greenrobot.eventbus.EventBus;
  * @describe
  */
 
-public class TestFragment extends Fragment {
+public class TestFragment extends LazyFragment {
     public String tag;
+    @BindView(R.id.textView5)
+    public TextView tv;
     public static TestFragment get(String tag){
         TestFragment fragment = new TestFragment();
         fragment.tag = tag;
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_eventbus_test,container,false);
-        view.findViewById(R.id.btm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Apollo.emit("event",tag);
+    protected int getResId() {
+        return R.layout.fragment_test;
+    }
 
-            }
-        });
-        return view;
+    @Override
+    protected void onRealViewLoaded(View view) {
+        ButterKnife.bind(this,view);
+        tv.setText(tag);
     }
 }

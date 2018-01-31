@@ -50,7 +50,11 @@
         <activity android:name=".knowledgepoint.kotlin.KotlinActivityActivity" />
         <activity android:name=".knowledgepoint.frame.EventBus.EventBusActivity" />
         <activity android:name=".knowledgepoint.frame.ApolloActivity" />
-        <activity android:name=".knowledgepoint.frame.CollapsingToolbarLayoutActivity"></activity>
+        <activity android:name=".knowledgepoint.frame.CollapsingToolbarLayoutActivity" />
+        <activity android:name=".knowledgepoint.view.ViewPagerAndAdapterActivity" />
+        <activity android:name=".knowledgepoint.frame.rxbus2.RxBusTestActivity" />
+        <activity android:name=".knowledgepoint.frame.RxJava2.RxJavaActivity" />
+        <activity android:name=".knowledgepoint.frame.RxEventProcessor.RxEventProcessorActivity"></activity>
     </application>
 
 </manifest>

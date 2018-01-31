@@ -48,7 +48,14 @@ dependencies {
     implementation 'com.github.lsxiao.Apollo:core:1.0.1-fix'
     //Apollo的编译时注解处理器
     annotationProcessor "com.github.lsxiao.Apollo:processor:1.0.1-fix"
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     implementation 'com.android.support:design:27.0.2'
+    compile 'com.hwangjr.rxbus:rxbus:1.0.6'
+
+    compile 'com.github.TkkSoCool.RxEventProcessor:api:test1.0'
+    annotationProcessor 'com.github.TkkSoCool.RxEventProcessor:compiler:test1.0'
+
 }
 
 apply plugin: 'kotlin-android'

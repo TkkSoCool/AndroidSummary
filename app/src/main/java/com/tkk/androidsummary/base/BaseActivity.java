@@ -12,6 +12,7 @@ import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -20,13 +21,13 @@ import butterknife.ButterKnife;
 
 public abstract  class BaseActivity extends AppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
-
+    public Unbinder unbinder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         KnowledgeInfo knowledgeInfo = getClass().getAnnotation(KnowledgeInfo.class);
         setContentView(getClass().getAnnotation(BindLayout.class).value());
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         if (knowledgeInfo!=null){
             getSupportActionBar().setTitle(knowledgeInfo.desc());
         }
@@ -35,4 +36,10 @@ public abstract  class BaseActivity extends AppCompatActivity {
     }
 
     protected  abstract void initView();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
 }

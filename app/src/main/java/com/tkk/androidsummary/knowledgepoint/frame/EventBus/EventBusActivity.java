@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Tag;
+import com.hwangjr.rxbus.thread.EventThread;
 import com.tkk.androidsummary.R;
 import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
@@ -38,35 +41,91 @@ public class EventBusActivity extends BaseActivity {
     ViewPager viewpager;
     @Override
     protected void initView() {
-        fragments.add(TestFragment.get("fragment1"));
-        fragments.add(TestFragment.get("fragment2"));
-        fragments.add(TestFragment.get("fragment3"));
-        viewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return 3;
-            }
-        });
+        long l1 =  System.currentTimeMillis();
         EventBus.getDefault().register(this);
+        long l2 =  System.currentTimeMillis();
+        Log.d(TAG, ">>>EventBus注册耗时---" + (l2-l1));
+        long l3 =  System.currentTimeMillis();
+        EventBus.getDefault().post(new Object());
+        EventBus.getDefault().post(new Object());
+        EventBus.getDefault().post(new Object());
+        EventBus.getDefault().post(new Object());
+        EventBus.getDefault().post(new Object());
+        EventBus.getDefault().post(new Object());
+
+        long l4 =  System.currentTimeMillis();
+
+        Log.d(TAG, ">>>EventBus发送耗时---" + (l4-l3));
+
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood0(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood1(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood2(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood3(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood4(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood5(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood6(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood7(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood8(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood9(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood10(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood11(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood12(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood13(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood14(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood16(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood17(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood18(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood19(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood20(Object foods) {
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void metood15(Object foods) {
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMoonEvent(MessageEvent messageEvent) {
-        Log.d(TAG, ">>>onMoonEvent---" + messageEvent.getMessage());
-    }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMoonEvent2(MessageEvent messageEvent) {
-        Log.d(TAG, ">>>onMoonEvent2---" + messageEvent.getMessage());
     }
 }
