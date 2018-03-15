@@ -19,6 +19,7 @@ import butterknife.OnClick;
 
 /**
  * Created  on 2017/11/8
+ *
  * @author 唐开阔
  * @describe AIDL跨进程通信
  */
@@ -31,23 +32,21 @@ public class AidlActivity extends BaseActivity {
     protected void initView() {
 
     }
+
     @OnClick(R.id.btm_bind)
     public void onBtmBindClicked() {
         Intent intent = new Intent();
-        intent.setComponent(new ComponentName("com.tkk.aidlservice","com.tkk.aidlservice.MyService"));
-        bindService(intent, new ServiceConnection()
-        {
+        intent.setComponent(new ComponentName("com.tkk.aidlservice", "com.tkk.aidlservice.MyService"));
+        bindService(intent, new ServiceConnection() {
 
             @Override
-            public void onServiceConnected(ComponentName name, IBinder service)
-            {
+            public void onServiceConnected(ComponentName name, IBinder service) {
 
                 iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName name)
-            {
+            public void onServiceDisconnected(ComponentName name) {
 
             }
         }, BIND_AUTO_CREATE);
@@ -55,9 +54,9 @@ public class AidlActivity extends BaseActivity {
 
     @OnClick(R.id.btm_getData)
     public void onBtmGetDataClicked() {
-        if (iMyAidlInterface == null){
+        if (iMyAidlInterface == null) {
 
-        }else {
+        } else {
             try {
                 Toast.makeText(AidlActivity.this, iMyAidlInterface.getPerson().getName(), Toast.LENGTH_SHORT).show();
             } catch (RemoteException e) {

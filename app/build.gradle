@@ -42,6 +42,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.github.TkkSoCool:YytUtils:V4.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
+
     //Apollo依赖RxAndroid2,请使用最新的版本
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //Apollo的核心库
@@ -52,9 +53,12 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     implementation 'com.android.support:design:27.0.2'
     compile 'com.hwangjr.rxbus:rxbus:1.0.6'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
-    compile 'com.github.TkkSoCool.RxEventProcessor:api:test1.0'
-    annotationProcessor 'com.github.TkkSoCool.RxEventProcessor:compiler:test1.0'
+    compile 'com.github.TkkSoCool.RxEventProcessor:api:test1.0.1'
+    annotationProcessor 'com.github.TkkSoCool.RxEventProcessor:compiler:test1.0.1'
 
 }
 

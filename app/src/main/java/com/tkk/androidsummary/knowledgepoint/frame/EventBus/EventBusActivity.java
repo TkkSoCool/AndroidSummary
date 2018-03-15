@@ -52,7 +52,6 @@ public class EventBusActivity extends BaseActivity {
         EventBus.getDefault().post(new Object());
         EventBus.getDefault().post(new Object());
         EventBus.getDefault().post(new Object());
-
         long l4 =  System.currentTimeMillis();
 
         Log.d(TAG, ">>>EventBus发送耗时---" + (l4-l3));

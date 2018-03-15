@@ -89,6 +89,8 @@ public class BinaryTree<T> {
             case 3:
                 iterateLastOrder(rootNode);
                 break;
+                default:
+                    break;
 
 
         }
