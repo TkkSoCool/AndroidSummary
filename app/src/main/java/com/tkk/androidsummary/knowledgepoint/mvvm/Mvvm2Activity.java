@@ -14,7 +14,7 @@ public class Mvvm2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        ActivityMvvm2Binding binding = DataBindingUtil.setContentView(this,R.layout.activity_mvvm2);
-//        User user = new User("Test", "User");
+//        UserInfo user = new UserInfo("Test", "UserInfo");
 //        binding.setUser(user);
     }
 }

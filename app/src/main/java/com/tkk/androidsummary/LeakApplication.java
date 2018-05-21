@@ -1,6 +1,7 @@
 package com.tkk.androidsummary;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
 
@@ -13,11 +14,19 @@ import com.squareup.leakcanary.LeakCanary;
  */
 
 public class LeakApplication extends Application {
-    @Override public void onCreate() {
+    private static Context context;
+
+    public static Context getContext() {
+        return context;
+    }
+
+    @Override
+    public void onCreate() {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
         LeakCanary.install(this);
+        context = this;
     }
 }

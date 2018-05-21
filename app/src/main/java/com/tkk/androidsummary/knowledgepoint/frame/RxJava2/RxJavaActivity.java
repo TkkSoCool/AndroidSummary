@@ -23,6 +23,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,10 +32,14 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subscribers.DisposableSubscriber;
 import io.reactivex.subscribers.ResourceSubscriber;
+import rx.functions.Func1;
 
 /**
  * Created  on 2018/1/19
@@ -51,6 +56,10 @@ import io.reactivex.subscribers.ResourceSubscriber;
  * 3)zip:{@link #zip()}
  * 4)ofType:{@link #ofType()}
  * 5)cast:{@link #cast()}
+ * 6)compose：{@link #compose()}将一个发送至转换为另一个发送者
+ * 7)takeUntil:TakeUntil使用一个标志Observable是否发射数据来判断，当标志Observable没有发射数据时，
+ *   正常发射数据，而一旦标志Observable发射过了数据则后面的数据都会被丢弃。
+ *
  * 背压：
  * 1）同步的订阅关系，在同一线程中，订阅者处理了事件，发布者才能继续发送
  * 2）异步的订阅关系：事件的发送和消费没有关系，会存在发送速度过快，事件来不及消费的情况
@@ -60,20 +69,63 @@ import io.reactivex.subscribers.ResourceSubscriber;
 @KnowledgeInfo(catalog = KnowledgeInfo.FRAME, desc = "RxJava2")
 @BindLayout(R.layout.activity_rxjava)
 public class RxJavaActivity extends BaseActivity {
-    //订阅时候不主动发送时间，只有手动调用onNext
     /**
-     * EventProcessor
+     *#BehaviorSubject
+     * 会发送离订阅最近的上一个值，没有上一个值的时候会发送默认值
+     * observer will receive the "one", "two" and "three" events, but not "zero"
+     * BehaviorSubject<Object> subject = BehaviorSubject.create("default");
+     * subject.onNext("zero");
+     * subject.onNext("one");
+     * subject.subscribe(observer);
+     * subject.onNext("two");
+     * subject.onNext("three");
      */
-    FlowableProcessor<Event> mFlowableProcessor;
+    protected BehaviorSubject<Event> subject = BehaviorSubject.create();
+
+    /**
+     * #PublishProcessor
+     * 订阅时候不主动发送数据，只有手动调用onNext
+     * 只会发射订阅之后数据
+     * EventProcessor的"数据调度中心"
+     */
+    FlowableProcessor<Event> mFlowableProcessor  = PublishProcessor.create();
 
     @Override
     protected void initView() {
-        /**
-         * PublishProcessor:事件发送处理器
-         */
-        mFlowableProcessor = PublishProcessor.create();
         mFlowableProcessor.toSerialized();
         publishProcessor();
+        takeUntil();
+    }
+
+    /**
+     * takeUntil 操作符
+     * 用于结合BehaviorSubject处理生命周期问题。
+     */
+    void takeUntil(){
+        Observable.interval(3, TimeUnit.SECONDS)
+                .compose(this.<Long>bindLife())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        Log.d(TAG, ">>>onNext---" + aLong);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, ">>>onComplete---" );
+                    }
+                });
     }
 
     /**
@@ -185,7 +237,8 @@ public class RxJavaActivity extends BaseActivity {
             public void accept(String s) throws Exception {
                 Log.d(TAG, s);
             }
-        });
+        })
+        ;
     }
 
     /**
@@ -206,12 +259,8 @@ public class RxJavaActivity extends BaseActivity {
             }
         }).cast(String.class);
         //建立连接
-        observable.subscribe(new Consumer<String>() {
-            @Override
-            public void accept(String integer) throws Exception {
-
-            }
-        });
+        observable.publish();
+        observable.subscribe();
     }
 
     /**
@@ -358,6 +407,83 @@ public class RxJavaActivity extends BaseActivity {
                     }
                 });
     }
+
+    void compose(){
+        ObservableTransformer<String,String> observableTransformer = new ObservableTransformer<String, String>() {
+            @Override
+            public ObservableSource<String> apply(Observable<String> upstream) {
+                return upstream.subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                ;
+            }
+        };
+        
+        Observable.just("1","2","3")
+                .compose(observableTransformer)
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, ">>>accept---" + s);
+                    }
+                }).dispose();
+        Observable.just("1","2","3")
+                .compose(observableTransformer)
+                .subscribeWith(new DisposableObserver<String>() {
+                    @Override
+                    public void onNext(String s) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }).dispose();
+        DisposableSubscriber disposableSubscriber;
+    }
+
+    /**
+     * RxJava    绑定生命周期
+     * filter    赛选生命周期方法
+     * takeUntil 切换事件的发送
+     * @param <T>
+     * @return
+     */
+    protected <T> ObservableTransformer<T,T> bindLife(){
+        return  new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.takeUntil(subject);
+            }
+        };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subject.onNext(new Event(null,null,true));
+    }
+
+    //    protected <T> Observable.Transformer<T, T> bindLife() {
+//        return new Observable.Transformer<T, T>() {
+//            @Override
+//            public Observable<T> call(Observable<T> observable) {
+//                return observable.takeUntil(subject.skipWhile(new Func1<Event, Boolean>() {
+//                    @Override
+//                    public Boolean call(Event event) {
+//                        return event != Event.DESTROY && event != Event.DETACH;
+//                    }
+//                }));
+//            }
+//        };
+//    }
+
+
 
     /**
      * Apollo的事件传递流程测试
