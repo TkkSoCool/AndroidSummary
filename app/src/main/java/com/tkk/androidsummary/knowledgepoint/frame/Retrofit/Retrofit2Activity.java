@@ -221,7 +221,6 @@ public class Retrofit2Activity extends BaseActivity {
             public void onResponse(Call<Translation1> call, Response<Translation1> response) {
                 Log.d(TAG + "传统", ">>>onResponse---" + response.body().getTranslateResult().get(0).get(0).getTgt());
             }
-
             @Override
             public void onFailure(Call<Translation1> call, Throwable throwable) {
                 Log.d(TAG, throwable.getMessage());

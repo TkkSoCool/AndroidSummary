@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import com.beloo.widget.chipslayoutmanager.util.log.IFillLogger;
 import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
+import com.tkk.androidsummary.knowledgepoint.frame.dagger2.Dagger2Activity_MembersInjector;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;

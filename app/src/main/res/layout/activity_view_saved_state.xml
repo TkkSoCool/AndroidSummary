@@ -4,8 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:stv="http://schemas.android.com/apk/res-auto"
     tools:context="com.tkk.androidsummary.knowledgepoint.view.ViewSavedStateActivity">
 
+    <com.allen.library.SuperButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="圆角边框"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit"
+        stv:sCornersRadius="5dp"
+        app:sGradientUseLevel="true"
+        stv:sGradientStartColor="@color/colorAccent"
+        stv:sGradientEndColor="@color/colorPrimary"
+
+        stv:sStrokeWidth="0.2dp" />
     <com.tkk.androidsummary.knowledgepoint.view.StateSaveTestView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

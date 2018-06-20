@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created  on 2018-05-18
  * @author 唐开阔
  * @describe Retrofit封装类
- *
  * 如何取消请求？
  * Rx方式和Call方式
  */
@@ -41,16 +40,9 @@ public class HttpHeper {
                 .build();
         tag = object;
     }
-
     public <T> ObservableTransformer<T, T> getThread() {
-        return new ObservableTransformer<T, T>() {
-            @Override
-            public ObservableSource<T> apply(Observable<T> upstream) {
-                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+        return upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
-
     /**
      * 调用方式伪代码：
      * HttpHeper.from(this).xxxApi.xxx(x,y)

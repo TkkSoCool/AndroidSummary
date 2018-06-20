@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Created  on 2018/1/3
  *
  * @author 唐开阔
- *         CollapsingToolbarLayout实现折叠效果
+ * CollapsingToolbarLayout实现折叠效果
  */
 @KnowledgeInfo(catalog = KnowledgeInfo.FRAME, desc = "CollapsingToolbarLayout使用")
 @BindLayout(R.layout.activity_collapsing_toolbar_layout)
@@ -39,12 +39,13 @@ public class CollapsingToolbarLayoutActivity extends BaseActivity {
     protected void initView() {
         getSupportActionBar().hide();
         for (int i = 0; i < 50; i++) {
-            datas.add(i+" ");
-        }recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BaseQuickAdapter<String,BaseViewHolder>(R.layout.list_homepage_item,datas) {
+            datas.add(i + " ");
+        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_homepage_item, datas) {
             @Override
             protected void convert(BaseViewHolder helper, final String item) {
-                helper.setText(R.id.tv_name,item);
+                helper.setText(R.id.tv_name, item);
             }
         });
     }

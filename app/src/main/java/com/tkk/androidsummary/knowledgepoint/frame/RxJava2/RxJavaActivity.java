@@ -1,5 +1,6 @@
 package com.tkk.androidsummary.knowledgepoint.frame.RxJava2;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.hwangjr.rxbus.RxBus;
@@ -12,8 +13,10 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -43,7 +46,6 @@ import rx.functions.Func1;
 
 /**
  * Created  on 2018/1/19
- *
  * @author 唐开阔
  * @describe RxJava基本使用学习
  * 主要用于事件的发送和接收
@@ -101,31 +103,34 @@ public class RxJavaActivity extends BaseActivity {
      * takeUntil 操作符
      * 用于结合BehaviorSubject处理生命周期问题。
      */
+    @SuppressLint("CheckResult")
     void takeUntil(){
+        new Thread(() -> Log.d(TAG, "this is a lambda Thread")).start();
+
         Observable.interval(3, TimeUnit.SECONDS)
                 .compose(this.<Long>bindLife())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        Log.d(TAG, ">>>onNext---" + aLong);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, ">>>onComplete---" );
-                    }
-                });
+                .filter(p->p>18)
+                .subscribe(System.out::println);//);
+//                .subscribe(new Observer<Long>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//                    @Override
+//                    public void onNext(Long aLong) {
+//                        Log.d(TAG, ">>>onNext---" + aLong);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//                    @Override
+//                    public void onComplete() {
+//                        Log.d(TAG, ">>>onComplete---" );
+//                    }
+//                });
     }
 
     /**
@@ -215,15 +220,9 @@ public class RxJavaActivity extends BaseActivity {
      * 将每一个事件转化成一个新的事件发送者，来发送事件
      * 事件是无序的
      */
+    @SuppressLint("CheckResult")
     void flatMap() {
-        Observable.create(new ObservableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                emitter.onNext(1);
-                emitter.onNext(2);
-                emitter.onNext(3);
-            }
-        }).flatMap(new Function<Integer, ObservableSource<String>>() {
+        Observable.create((ObservableEmitter<Integer> a) -> a.onNext(1)).flatMap(new Function<Integer, ObservableSource<String>>() {
             @Override
             public ObservableSource<String> apply(Integer integer) throws Exception {
                 final List<String> list = new ArrayList<>();
