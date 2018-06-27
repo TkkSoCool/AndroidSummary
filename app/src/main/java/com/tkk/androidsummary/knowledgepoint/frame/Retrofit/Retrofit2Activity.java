@@ -20,6 +20,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -30,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -52,33 +54,61 @@ public class Retrofit2Activity extends BaseActivity {
     protected void initView() {
 //        example();
 //        exampleRx();
-        final HttpHeper httpHeper = HttpHeper.form(this);
-        Map<String, String> map = new HashMap<>();
-        map.put("account", "tkk");
-        map.put("password", "123456");
-        Map<String, String> pramMap = ParmMapUtils.getParmMap();
-        Gson gson = new Gson();
-        pramMap.put("data", gson.toJson(map));
-        httpHeper.create(UserService.class)
-                .userLogin(pramMap)
-                .subscribeOn(Schedulers.io())
-                .flatMap(new BaseFunction<UserInfo, WorkInfo>() {
-                    @Override
-                    public ObservableSource<CommonResult<WorkInfo>> back(UserInfo result) {
-                        return httpHeper.create(UserService.class).getCurrentWork(result.getToken(), ParmMapUtils.getParmMap());
-                    }})
+                Map<String, String> map = new HashMap<>();
+
+        final HttpHeper httpHeper = HttpHeper.get(this);
+        httpHeper.create(UserService.class).getSqr()
+                .compose(this.bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(this.<CommonResult<WorkInfo>>bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(new BaseCallBack<WorkInfo>() {
+                .subscribe(new Observer<BaseBean<List<SqrBean>>>() {
                     @Override
-                    public void onCallBackSuccess(WorkInfo data) {
+                    public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
-                    public void onFail(String mes) {
-                        Toast.makeText(Retrofit2Activity.this, mes, Toast.LENGTH_SHORT).show();
+                    public void onNext(BaseBean<List<SqrBean>> listBaseBean) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
+
+//        Map<String, String> map = new HashMap<>();
+//        map.put("account", "tkk");
+//        map.put("password", "123456");
+//        Map<String, String> pramMap = ParmMapUtils.getParmMap();
+//        Gson gson = new Gson();
+//        pramMap.put("data", gson.toJson(map));
+//        httpHeper.create(UserService.class)
+//                .userLogin(pramMap)
+//                .subscribeOn(Schedulers.io())
+//                .flatMap(new BaseFunction<UserInfo, WorkInfo>() {
+//                    @Override
+//                    public ObservableSource<CommonResult<WorkInfo>> back(UserInfo result) {
+//                        return httpHeper.create(UserService.class).getCurrentWork(result.getToken(), ParmMapUtils.getParmMap());
+//                    }})
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .compose(this.bindUntilEvent(ActivityEvent.DESTROY))
+//                .subscribe(new BaseCallBack<WorkInfo>() {
+//                    @Override
+//                    public void onCallBackSuccess(WorkInfo data) {
+//
+//                    }
+//                    @Override
+//                    public void onFail(String mes) {
+//                        Toast.makeText(Retrofit2Activity.this, mes, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 
     public void exampleRx() {
@@ -221,6 +251,7 @@ public class Retrofit2Activity extends BaseActivity {
             public void onResponse(Call<Translation1> call, Response<Translation1> response) {
                 Log.d(TAG + "传统", ">>>onResponse---" + response.body().getTranslateResult().get(0).get(0).getTgt());
             }
+
             @Override
             public void onFailure(Call<Translation1> call, Throwable throwable) {
                 Log.d(TAG, throwable.getMessage());

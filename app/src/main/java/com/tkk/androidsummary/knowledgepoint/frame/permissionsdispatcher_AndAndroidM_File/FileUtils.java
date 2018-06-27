@@ -34,8 +34,7 @@ public class FileUtils {
     //判断SD卡是否挂载
 
     private static boolean isSDCardAvailable() {
-        if (Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState())) {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return true;
         } else {
             return false;
@@ -135,7 +134,7 @@ public class FileUtils {
      * @param uri
      * @return
      */
-    public static Bitmap decodeUriAsBitmap(Context mContext,Uri uri) {
+    public static Bitmap decodeUriAsBitmap(Context mContext, Uri uri) {
         Bitmap bitmap = null;
         try {
             // 先通过getContentResolver方法获得一个ContentResolver实例，
@@ -207,8 +206,10 @@ public class FileUtils {
 
         return outputIamge;
     }
+
     /**
      * 通过Uri获取文件路径
+     *
      * @param context
      * @param uri
      * @return
@@ -268,6 +269,7 @@ public class FileUtils {
         return null;
 
     }
+
     public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";

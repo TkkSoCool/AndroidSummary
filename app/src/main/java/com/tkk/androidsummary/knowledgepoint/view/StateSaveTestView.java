@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.allen.library.SuperTextView;
+
 /**
  * Created  on 2017/11/14
  * @author 唐开阔
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 public class StateSaveTestView extends android.support.v7.widget.AppCompatTextView{
     String TAG = "StateSaveTestView";
+    SuperTextView A ;
     public StateSaveTestView(Context context) {
         super(context);
     }

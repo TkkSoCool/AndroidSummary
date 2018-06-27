@@ -9,5 +9,7 @@ package com.tkk.androidsummary.knowledgepoint.frame.Retrofit.encapsulation;
 public class HttpConfig {
     public static final  int RESPONSE_OK = 200;
     public static final int HTTP_TIME = 30;
-    public static final String BASE_URL = "http://192.168.3.128:8082/";
+    static String a  = "http://192.168.1.98:8080/";
+
+    public static final String BASE_URL = a;
 }

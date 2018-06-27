@@ -50,7 +50,7 @@ public class HttpHeper {
      * 手动取消 自动 取消
      * 判断是call 还是 observble
      */
-    public static HttpHeper form(Object object) {
+    public static HttpHeper get(Object object) {
         HttpHeper httpHeper = new HttpHeper(object);
         return httpHeper;
     }

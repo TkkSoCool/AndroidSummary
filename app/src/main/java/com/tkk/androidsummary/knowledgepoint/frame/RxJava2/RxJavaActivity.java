@@ -195,13 +195,10 @@ public class RxJavaActivity extends BaseActivity {
      * 对每一个发送事件进行处理
      */
     void map() {
-        Observable.create(new ObservableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                emitter.onNext(1);
-                emitter.onNext(2);
-                emitter.onNext(3);
-            }
+        Observable.create((ObservableOnSubscribe<Integer>) emitter -> {
+            emitter.onNext(1);
+            emitter.onNext(2);
+            emitter.onNext(3);
         }).map(new Function<Integer, String>() {
             @Override
             public String apply(Integer integer) throws Exception {

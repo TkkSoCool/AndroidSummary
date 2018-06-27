@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +20,19 @@ import com.tkk.androidsummary.R;
 import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
 import com.tkk.androidsummary.base.BaseActivity;
+import com.tkk.androidsummary.knowledgepoint.frame.Luban.LubanActivity;
+import com.tkk.androidsummary.knowledgepoint.frame.Luban.PhotoCompressUtils;
 
 import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -43,14 +51,16 @@ public class PermissionAndFileActivity extends BaseActivity {
     private File takePhotoFile;
     private boolean mShouldCrop = false;
     private TakePictureManager takePictureManager;
+    PhotoCompressUtils photoCompressUtils;
 
     @Override
     protected void initView() {
+        photoCompressUtils = new PhotoCompressUtils();
     }
 
     @OnClick(R.id.bt_chose)
     void chosePic() {
-        takePictureManager = TakePictureManager.Builder.from(this).isCompressor(false).isTailor(true).creat();
+        takePictureManager = TakePictureManager.Builder.from(this).isCompressor(false).isTailor(false).creat();
         PermissionAndFileActivityPermissionsDispatcher.openCameraWithPermissionCheck(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] items = {"选择本地照片", "拍照"};
@@ -78,7 +88,43 @@ public class PermissionAndFileActivity extends BaseActivity {
                         public void successful(File outFile) {
                             tvPath.setText(outFile.getPath());
                             Glide.with(PermissionAndFileActivity.this).load(outFile).into(imageView);
+                            Log.d(TAG, ">>>压缩前---" + outFile.length());
+
+                            Observable.just(outFile.getPath())
+                                    .cast(String.class)
+                                    .observeOn(Schedulers.io())
+                                    .map(path -> {
+                                        Log.d(TAG, ">>>onCreate---" + Thread.currentThread().getName());
+                                        return photoCompressUtils.compress(PermissionAndFileActivity.this,path);
+                                    })
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<String>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(String s) {
+                                            Log.d(TAG, ">>>压缩后---" + new File(s).length());
+                                            Log.d(TAG, ">>>onNext---" + Thread.currentThread().getName());
+                                            Log.d(TAG, ">>>onNext---" + s);
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+
+                                        }
+                                    });
                         }
+
+
 
                         @Override
                         public void failed(int errorCode, List<String> deniedPermissions) {

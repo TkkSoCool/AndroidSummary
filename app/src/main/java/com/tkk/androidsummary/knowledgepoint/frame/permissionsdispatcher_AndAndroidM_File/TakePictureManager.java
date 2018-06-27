@@ -163,55 +163,6 @@ public class TakePictureManager {
 
 
     /**
-     * 获取到的相片回调方法，
-     * 必须要在当前的Activity或Fragment中的onActivityResult下调用！
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    public void attachToActivityForResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-            //拍照后得到的图片
-            case CODE_ORIGINAL_PHOTO_CAMERA:
-                handlePhoto(new File(takePhotoPath));
-                break;
-
-            //选择相册后得到的图片
-            case CODE_ORIGINAL_PHOTO_ALBUM:
-                if (data != null) {
-                    Uri sourceUri = data.getData();
-                    String pickPath = FileUtils.getPathByUri(mContext, sourceUri);
-                    handlePhoto(new File(pickPath));
-                } else {
-                    takeCallBacklistener.failed(0, null);
-                }
-                break;
-
-            //裁剪后的图片：
-            case CODE_TAILOR_PHOTO:
-                if (data != null) {
-                    if (curUri != null) {
-                        //裁剪后再压缩
-                        File temFile = FileUtils.outputIamge(mContext, FileUtils.compressImage(FileUtils.decodeUriAsBitmap(mContext, curUri), 100));
-                        if (builder.isCompressor) {
-                            temFile = FileUtils.outputIamge(mContext, FileUtils.compressImage(FileUtils.decodeUriAsBitmap(mContext, Uri.fromFile(temFile)), 100));
-
-                        }
-                        takeCallBacklistener.successful(temFile);
-
-                    }
-                } else {
-                    takeCallBacklistener.failed(0, null);
-                }
-                break;
-        }
-    }
-
-    /**
      * 处理拍照或者选择的图片文件
      * 裁剪-压缩
      */
@@ -255,6 +206,7 @@ public class TakePictureManager {
 
     //权限回调
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0) {
@@ -277,6 +229,55 @@ public class TakePictureManager {
         }
 
     }
+
+    /**
+     * 获取到的相片回调方法，
+     * 必须要在当前的Activity或Fragment中的onActivityResult下调用！
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    public void attachToActivityForResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            //拍照后得到的图片
+            case CODE_ORIGINAL_PHOTO_CAMERA:
+                handlePhoto(new File(takePhotoPath));
+                break;
+            //选择相册后得到的图片
+            case CODE_ORIGINAL_PHOTO_ALBUM:
+                if (data != null) {
+                    Uri sourceUri = data.getData();
+                    String pickPath = FileUtils.getPathByUri(mContext, sourceUri);
+                    handlePhoto(new File(pickPath));
+                } else {
+                    takeCallBacklistener.failed(0, null);
+                }
+                break;
+
+            //裁剪后的图片：
+            case CODE_TAILOR_PHOTO:
+                if (data != null) {
+                    if (curUri != null) {
+                        //裁剪后再压缩
+                        File temFile = new File(FileUtils.getPathByUri(mContext,curUri));
+                        if (builder.isCompressor) {
+                            temFile = FileUtils.outputIamge(mContext, FileUtils.compressImage(FileUtils.decodeUriAsBitmap(mContext, Uri.fromFile(temFile)), 100));
+                        }
+                        takeCallBacklistener.successful(temFile);
+
+
+                    }
+                } else {
+                    takeCallBacklistener.failed(0, null);
+                }
+                break;
+        }
+    }
+
 
     /**
      * 申请运行时权限
