@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".LeakApplication"
@@ -23,16 +23,18 @@
         android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.tkk.androidsummary"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -57,7 +59,6 @@
         <activity android:name=".knowledgepoint.fourcomponents.ContextActivity" />
         <activity android:name=".knowledgepoint.algorithm.SortAndFindActivity" />
         <activity android:name=".knowledgepoint.touch.TouchActivity" />
-        <activity android:name=".knowledgepoint.frame.Dagger2Activity" />
         <activity android:name=".knowledgepoint.optimize.MemorLeakActivity" />
         <activity android:name=".knowledgepoint.mvvm.Mvvm2Activity" />
         <activity android:name=".knowledgepoint.algorithm.DataStructureActivity" />
@@ -76,7 +77,10 @@
         <activity android:name=".knowledgepoint.frame.Novate.NovateActivity" />
         <activity android:name=".knowledgepoint.frame.Lifecycle.LifecycleDemoActivity" />
         <activity android:name=".knowledgepoint.frame.dagger2.Dagger2Activity" />
-        <activity android:name=".knowledgepoint.frame.permissionsdispatcher_AndAndroidM_File.PermissionAndFileActivity"></activity>
+        <activity android:name=".knowledgepoint.frame.permissionsdispatcher_AndAndroidM_File.PermissionAndFileActivity" />
+        <activity android:name=".knowledgepoint.frame.Luban.LubanActivity" />
+        <activity android:name=".knowledgepoint.fourcomponents.FileActivity"></activity>
+        <activity android:name=".knowledgepoint.view.TabLayoutActivity" />
     </application>
 
 </manifest>

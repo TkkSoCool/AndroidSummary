@@ -1,7 +1,6 @@
 package com.tkk.androidsummary.knowledgepoint.frame.Retrofit.encapsulation;
 
 import com.tkk.androidsummary.knowledgepoint.frame.CommonResult;
-import com.tkk.androidsummary.knowledgepoint.frame.Retrofit.UserInfo;
 import com.tkk.androidsummary.knowledgepoint.frame.Retrofit.WorkInfo;
 
 import io.reactivex.Observable;
