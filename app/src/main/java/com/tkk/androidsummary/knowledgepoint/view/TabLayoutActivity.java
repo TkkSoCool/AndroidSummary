@@ -36,9 +36,7 @@ public class TabLayoutActivity  extends BaseActivity{
     protected void initView() {
         for (int i = 0; i < titles.length; i++) {
             fragments.add(TestFragment.get(titles[i]));
-
         }
-
         viewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -75,5 +73,6 @@ public class TabLayoutActivity  extends BaseActivity{
 
             }
         });
+
     }
 }
