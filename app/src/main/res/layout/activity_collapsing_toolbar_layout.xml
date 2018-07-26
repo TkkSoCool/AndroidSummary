@@ -25,27 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="top"
-                app:layout_collapseMode="pin"
-                >
-
-                <TextView
-                    android:layout_marginLeft="0dp"
-                    android:textSize="20sp"
-                    android:text="顶部部分"
-                    android:minHeight="50dp"
-                    android:gravity="center"
-                    android:background="#ff0088"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp" />
-            </android.support.v7.widget.Toolbar>
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -61,15 +40,6 @@
             app:tabSelectedTextColor="#0835f8"
             app:tabTextColor="#151515">
 
-            <!--指示器颜色-->
-            <!-- app:tabIndicatorColor="#0835f8"-->
-
-            <!--tab条目中字体颜色-->
-            <!--app:tabSelectedTextColor="#0835f8"-->
-
-
-            <!--布局选择器-->
-            <!--android:icon="@drawable/tab_selector"-->
             <android.support.design.widget.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -8,6 +8,7 @@ import com.tkk.androidsummary.knowledgepoint.view.lazyfragment.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created  on 2017/12/29
@@ -20,12 +21,12 @@ public class TestFragment extends LazyFragment {
     public String tag;
     @BindView(R.id.textView5)
     public TextView tv;
+    Unbinder unbinder;
     public static TestFragment get(String tag){
         TestFragment fragment = new TestFragment();
         fragment.tag = tag;
         return fragment;
     }
-
     @Override
     protected int getResId() {
         return R.layout.fragment_test;
@@ -33,7 +34,11 @@ public class TestFragment extends LazyFragment {
 
     @Override
     protected void onRealViewLoaded(View view) {
-        ButterKnife.bind(this,view);
         tv.setText(tag);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

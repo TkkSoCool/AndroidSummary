@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity {
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getApplication().getPackageName(), PackageManager.GET_ACTIVITIES);
             ActivityInfo[] activities = packageInfo.activities;
-
             /**
              * 轮询所有activity的KnowledgeInfo注解信息
              */

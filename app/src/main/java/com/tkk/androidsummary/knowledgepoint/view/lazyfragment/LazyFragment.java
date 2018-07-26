@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created  on 2018/1/16
  *
  * @author 唐开阔
- * @describe 懒加载fragment
+ * @describe 懒加载fragment-不预加载
  */
 
 public abstract class LazyFragment extends Fragment{
@@ -27,6 +28,7 @@ public abstract class LazyFragment extends Fragment{
     private boolean mViewCreated = false;
     // 占位图
     private ViewStubCompat mViewStub;
+    Unbinder unbinder;
     @SuppressLint("RestrictedApi")
     @Nullable
     @Override
@@ -41,7 +43,6 @@ public abstract class LazyFragment extends Fragment{
         mViewStub.setLayoutResource(getResId());
         root.addView(mViewStub, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         root.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT));
-
         mRootView = root;
 
         mViewCreated = true;
@@ -75,7 +76,16 @@ public abstract class LazyFragment extends Fragment{
         }
 
         mLoaded = true;
-        onRealViewLoaded(mViewStub.inflate());
+        View view = mViewStub.inflate();
+        unbinder =  ButterKnife.bind(this,view);
+
+        onRealViewLoaded(view);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 
     @Override
@@ -95,5 +105,7 @@ public abstract class LazyFragment extends Fragment{
      * 当视图真正加载时调用
      */
     protected abstract void onRealViewLoaded(View view);
+
+
 
 }

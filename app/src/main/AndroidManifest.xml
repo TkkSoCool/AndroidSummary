@@ -79,8 +79,9 @@
         <activity android:name=".knowledgepoint.frame.dagger2.Dagger2Activity" />
         <activity android:name=".knowledgepoint.frame.permissionsdispatcher_AndAndroidM_File.PermissionAndFileActivity" />
         <activity android:name=".knowledgepoint.frame.Luban.LubanActivity" />
-        <activity android:name=".knowledgepoint.fourcomponents.FileActivity"></activity>
+        <activity android:name=".knowledgepoint.fourcomponents.FileActivity" />
         <activity android:name=".knowledgepoint.view.TabLayoutActivity" />
+        <activity android:name=".knowledgepoint.view.fragment_life.FragmentLifeActivity"></activity>
     </application>
 
 </manifest>
