@@ -95,8 +95,69 @@ public class RxJavaActivity extends BaseActivity {
     @Override
     protected void initView() {
         mFlowableProcessor.toSerialized();
-        publishProcessor();
-        takeUntil();
+//        publishProcessor();
+//        takeUntil();
+//        lianshi();
+        hebing();
+    }
+
+    /**
+     * 合并操作符
+     * concat ：
+     * merge：
+     * zip：
+     */
+    void hebing(){
+//        Observable.concat(Observable.just(1, 2, 3),
+//                Observable.just(4, 5, 6),
+//                Observable.just(7, 8, 9),
+//                Observable.just(10, 11, 12))
+//                .subscribe(new Observer<Integer>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Integer value) {
+//                        Log.d(TAG, "接收到了事件"+ value  );
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d(TAG, "对Error事件作出响应");
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        Log.d(TAG, "对Complete事件作出响应");
+//                    }
+//                });
+        Observable.merge(Observable.just(1, 2, 3),
+                Observable.just(4, 5, 6),
+                Observable.just(7, 8, 9),
+                Observable.just(10, 11, 12))
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer value) {
+                        Log.d(TAG, "接收到了事件"+ value  );
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "对Error事件作出响应");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "对Complete事件作出响应");
+                    }
+                });
     }
 
     /**
@@ -555,5 +616,40 @@ public class RxJavaActivity extends BaseActivity {
                 });
 
         mFlowableProcessor.onNext(new Event("1", "1"));
+    }
+
+
+    /**
+     * 链式调用
+     */
+    private void lianshi(){
+        Observable.just("1","2","3")
+                .map(a -> {
+                    Log.d(TAG, ">>>map---" );
+
+                    return  a;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, ">>>onSubscribe---" );
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d(TAG, ">>>onNext---" );
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, ">>>onComplete---" );
+                    }
+                });
     }
 }

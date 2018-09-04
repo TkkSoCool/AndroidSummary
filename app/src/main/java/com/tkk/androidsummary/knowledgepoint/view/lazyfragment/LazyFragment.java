@@ -91,6 +91,7 @@ public abstract class LazyFragment extends Fragment{
     @Override
     public void onDestroyView() {
         mViewCreated = false;
+        mRootView = null;
         super.onDestroyView();
     }
 
