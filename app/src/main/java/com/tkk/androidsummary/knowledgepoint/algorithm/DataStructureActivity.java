@@ -3,13 +3,13 @@ package com.tkk.androidsummary.knowledgepoint.algorithm;
 import android.support.annotation.IntRange;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
-
+import android.util.SparseArray;
 import com.tkk.androidsummary.R;
 import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
 import com.tkk.androidsummary.base.BaseActivity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,6 +63,10 @@ public class DataStructureActivity extends BaseActivity {
         HashMap<String,Integer> map = new HashMap<>();
         map.put("1",1);
         HashSet a;
+        ArrayMap bb = null;
+        bb.put(1,1);
+        SparseArray ddd = null;
+        ddd.put(1,"2");
         ArrayList<Integer> arrayList = new ArrayList<>();
         LinkedList aa;
         SinglyLinkedList<Integer> linkedList = new SinglyLinkedList<Integer>();

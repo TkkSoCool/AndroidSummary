@@ -35,11 +35,12 @@ import butterknife.OnClick;
  * 3)同步阻塞，需要的锁没有被释放
  * e)终止（dead）状态: 线程销毁
  * Thread的几个重要方法
- * a)start()方法,线程进入就绪状态，等待cpu调度
- * b)run()方法，获取cpu资源线程处于运行状态
- * c)isAlive()方法,是否处于运行状态
- * d)yield()方法，交出cpu资源，重回就绪状态yield方法只能让拥有相同优先级或更高优先级的线程以运行的机会。
- * e)join()方法,join()的作用是等待线程对象销毁。
+ * sleep(time):使线程转到阻塞状态,倒计时结束后进入就绪状态，如果在synchronized
+ * 下不会释放对象的锁
+ * wait(): Object方法，只能在synchronized(Obj)代码块下使用，该对象已被线程A获取对象锁的前提下，A进入阻塞状态休眠，并且释放对象锁
+ * notify(): 唤醒wait方法进入阻塞状态的线程，并从新获取对象锁
+ * yield()方法，交出cpu资源，重回就绪状态，yield方法只能让拥有相同优先级或更高优先级的就绪状态线程运行
+ * join()方法,针对于主线程与子线程，cThread.join(),主线程会等子线程结束后再执行
  * 线程安全
  * 1)概述：其实是指多线程环境下对共享资源的访问可能会引起此共享资源的不一致性。
  * 2)解决：是在访问临界资源的代码前面加上一个锁，当访问完临界资源后释放锁，让其他线程继续访问。
@@ -48,31 +49,31 @@ import butterknife.OnClick;
  * a)同步代码块,锁的是synchronized()里面的对象
  * b)同步非静态方法锁住的是当前对象实例
  * c)同步静态方法锁住的是类的class对象
- * 4)volatile关键字修饰变量，会保持变量的一致性
-
+ * 4)volatile关键字修饰变量，会保持变量的一致性,　所谓一致性，是指当一条线程修改了共享变量的值，新值对于其他线程来说是可以立即得知的。
  * 线程池
  */
 @BindLayout(R.layout.activity_thread)
 @KnowledgeInfo(catalog = KnowledgeInfo.THREAD, desc = "Java多线程")
 public class ThreadActivity extends BaseActivity {
     SynchronizedTest testClass;
+    MyRunble thread1,thread2;
 
     @Override
     protected void initView() {
         testClass = new SynchronizedTest();
+        thread1 = new MyRunble("thread1");
+        thread2 = new MyRunble("thread2");
+
     }
 
     @OnClick(R.id.bt_creat_by_thred)
     public void onBtCreatByThredClicked() {
-        MyThread thread = new MyThread("MyThread");
-        thread.start();
+
     }
 
     @OnClick(R.id.bt_creat_by_runble)
     public void onBtCreatByRunbleClicked() {
-        MyRunble runble = new MyRunble("MyRunble");
-        Thread thread = new Thread(runble);
-        thread.start();
+
     }
 
     /**
@@ -80,27 +81,12 @@ public class ThreadActivity extends BaseActivity {
      */
     @OnClick(R.id.bt_s1)
     public void onBtS1Clicked() {
-        for (int i = 1; i < 6; i++) {
-            MyThread thread = new MyThread(i + "Thread  ");
-            thread.start();
-        }
 
     }
 
-    class MyThread extends Thread {
 
-        public MyThread(String name) {
-            super(name);
-        }
 
-        @Override
-        public void run() {
-            testClass.synchronizedDmk();
-            testClass.synchronizedMentod();
-        }
-    }
-
-    class MyRunble implements Runnable {
+    class MyRunble extends Thread {
         private String name;
 
         public MyRunble(String name) {
@@ -110,26 +96,32 @@ public class ThreadActivity extends BaseActivity {
         @Override
         public void run() {
             Log.d(TAG + "子线程name: " + name, " 子线程ID: " + Thread.currentThread().getId());
+            try {
+                wait(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     class SynchronizedTest {
+        Integer i = 1;
         /**
          * 同步代码块测试方法
          */
         public void synchronizedDmk() {
             Log.d(TAG + "   进入含有同步代码块方法", Thread.currentThread().getName());
-            synchronized (new Object()) {
+            synchronized (i) {
                 Log.d("进入同步代码块", Thread.currentThread().getName());
                 for (int i = 1; i < 10; i++) {
-                    Log.d(TAG + "  synchronizedDmk", Thread.currentThread().getName() + i);
+                    Log.d(TAG + "synchronizedDmk", Thread.currentThread().getName() + i);
                 }
             }
         }
 
         public synchronized void synchronizedMentod() {
             for (int i = 1; i < 10; i++) {
-                Log.d(TAG + "  synchronizedMentod", Thread.currentThread().getName() + i);
+                Log.d(TAG + "synchronizedMentod", Thread.currentThread().getName() + i);
             }
         }
     }

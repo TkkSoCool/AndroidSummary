@@ -3,16 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tkk.androidsummary">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name=".LeakApplication"
         android:allowBackup="true"
@@ -21,15 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        <activity
+            android:windowSoftInputMode="stateHidden|adjustNothing"
+            android:name=".knowledgepoint.view.InPutSoftModeActivity"
+            android:theme="@style/FullAndNoActionBar"/>
+        <activity android:name=".knowledgepoint.other.vpn.VpnActivity" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -38,22 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".knowledgepoint.ipc.AidlActivity" />
         <activity
             android:name=".knowledgepoint.fourcomponents.ActivityActivity"
             android:taskAffinity=":aaa" />
         <activity android:name=".knowledgepoint.fourcomponents.ServiceTestActivity" />
-
-        <service
-            android:name=".knowledgepoint.fourcomponents.MyTestService"
-            android:exported="true" />
-
         <activity
             android:name=".knowledgepoint.fourcomponents.BActivity"
             android:launchMode="singleInstance"
             android:taskAffinity=":aaa" />
+
         <activity android:name=".knowledgepoint.fourcomponents.BroadcastActivity" />
         <activity android:name=".knowledgepoint.view.ViewSavedStateActivity" />
+
         <activity android:name=".knowledgepoint.thread.ThreadActivity" />
         <activity android:name=".knowledgepoint.thread.HandlerActivity" />
         <activity android:name=".knowledgepoint.fourcomponents.ContextActivity" />
@@ -81,7 +65,41 @@
         <activity android:name=".knowledgepoint.frame.Luban.LubanActivity" />
         <activity android:name=".knowledgepoint.fourcomponents.FileActivity" />
         <activity android:name=".knowledgepoint.view.TabLayoutActivity" />
-        <activity android:name=".knowledgepoint.view.fragment_life.FragmentLifeActivity"></activity>
+        <activity android:name=".knowledgepoint.view.fragment_life.FragmentLifeActivity" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <service
+            android:name=".knowledgepoint.fourcomponents.MyTestService"
+            android:exported="true" />
+        <service
+            android:name=".knowledgepoint.other.vpn.ToyVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.net.VpnService.SUPPORTS_ALWAYS_ON"
+                android:value="true" />
+        </service>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BIND_VPN_SERVICE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

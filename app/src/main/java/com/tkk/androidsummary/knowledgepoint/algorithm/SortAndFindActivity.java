@@ -48,7 +48,7 @@ public class SortAndFindActivity extends BaseActivity {
     @OnClick(R.id.bt_mp)
     public void onBtMpClicked() {
         int len = arrs.length;
-        int i, j, temp;
+        int i, j;
         for (i = 0; i < len - 1; i++) {
             for (j = 0; j < len - i - 1; j++) {
                 if (arrs[j] > arrs[j + 1]) {

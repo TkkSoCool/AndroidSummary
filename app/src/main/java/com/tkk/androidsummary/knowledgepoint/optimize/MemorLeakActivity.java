@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -85,6 +86,7 @@ public class MemorLeakActivity extends BaseActivity {
     void handler(){
         Message message = Message.obtain();
         mHandler.sendMessageDelayed(message,10000);
+        TextPaint textPaint = new TextPaint();
     }
     /**
      * 常量池oom

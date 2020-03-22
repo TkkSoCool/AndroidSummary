@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * @author 唐开阔
  * @describe 四大主键-activity
  * acticity生命周期：正常
-     启动：onCreate :创建
+     启动：onCreate :创建   
           onStart : 可见，未在前台，无法交互
           onResume :可见可以交互，已经显示
      停止：onPause：正在停止
