@@ -49,7 +49,6 @@
         <activity android:name=".knowledgepoint.javatype.JavaTypeActivity" />
         <activity android:name=".knowledgepoint.kotlin.KotlinActivityActivity" />
         <activity android:name=".knowledgepoint.frame.EventBus.EventBusActivity" />
-        <activity android:name=".knowledgepoint.frame.ApolloActivity" />
         <activity android:name=".knowledgepoint.frame.CollapsingToolbarLayoutActivity" />
         <activity android:name=".knowledgepoint.view.ViewPagerAndAdapterActivity" />
         <activity android:name=".knowledgepoint.frame.rxbus2.RxBusTestActivity" />
@@ -61,7 +60,6 @@
         <activity android:name=".knowledgepoint.frame.Novate.NovateActivity" />
         <activity android:name=".knowledgepoint.frame.Lifecycle.LifecycleDemoActivity" />
         <activity android:name=".knowledgepoint.frame.dagger2.Dagger2Activity" />
-        <activity android:name=".knowledgepoint.frame.permissionsdispatcher_AndAndroidM_File.PermissionAndFileActivity" />
         <activity android:name=".knowledgepoint.frame.Luban.LubanActivity" />
         <activity android:name=".knowledgepoint.fourcomponents.FileActivity" />
         <activity android:name=".knowledgepoint.view.TabLayoutActivity" />

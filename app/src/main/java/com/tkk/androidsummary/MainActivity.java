@@ -19,6 +19,7 @@ import com.tkk.androidsummary.annotation.BindLayout;
 import com.tkk.androidsummary.annotation.KnowledgeInfo;
 import com.tkk.androidsummary.base.BaseActivity;
 import com.tkk.androidsummary.bean.ActivityData;
+import com.tkk.androidsummary.knowledgepoint.algorithm.leetcode.SubjectOneToFifty;
 import com.tkk.androidsummary.view.MarginItemDecoration;
 
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class MainActivity extends BaseActivity {
                 });
             }
         });
+
+
+
     }
 
     private void initActivityInfos() {

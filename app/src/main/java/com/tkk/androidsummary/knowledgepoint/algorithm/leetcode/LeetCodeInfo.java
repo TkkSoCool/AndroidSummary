@@ -27,4 +27,11 @@ public @interface LeetCodeInfo {
      * @return 题目示例
      */
     String example() default "";
+
+    /**
+     * @return 分析
+     */
+    String analyse() default "";
+
+
 }

@@ -2,6 +2,7 @@ package com.tkk.androidsummary;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.squareup.leakcanary.LeakCanary;
 
@@ -28,5 +29,12 @@ public class LeakApplication extends Application {
         }
         LeakCanary.install(this);
         context = this;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+
     }
 }
